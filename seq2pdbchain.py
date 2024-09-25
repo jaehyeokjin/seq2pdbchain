@@ -194,8 +194,16 @@ def pdb_chain(sequence, showprogress=True):
 
 
 if __name__ == "__main__":
-    print(pdb_chain(input()))
-
+    # Generate the full atomistic PDB structure from the input sequence
+    full_pdb_content = pdb_chain(input())
+    
+    # Print or write the full atomistic PDB content (this part already exists in your code)
+    print(full_pdb_content)
+    
+    # Now generate the coarse-grained PDB where each particle corresponds to the C-alpha atoms
+    cg_pdb_filename = 'cg_fus.pdb'  # Name of the CG PDB file
+    blks_to_cg_pdb(sequence, chains[best_chain_idx].blks, cg_pdb_filename)
+    print(f"Coarse-grained PDB file saved as {cg_pdb_filename}")
 
 
 
