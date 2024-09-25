@@ -31,6 +31,26 @@ def blks_to_pdb(residues, blks):
     lines.append("TER " + pdb_line(Atom(" ", [0., 0., 0.], " "), i_atom, len(residues), residue)[4:27])
     return "\n".join(lines)
 
+def blks_to_cg_pdb(residues, blks, output_filename):
+    """ Writes a CG PDB file where each particle corresponds to the C-alpha (CA) atom of each residue. """
+    lines = []
+    i_atom = 1  # Start atom numbering from 1
+    for i_seq, (residue, blk) in enumerate(zip(residues, blks)):
+        # Find the C-alpha (CA) atom in the block
+        ca_atom = next((atom for atom in blk if atom.name == "CA"), None)
+        if ca_atom:
+            # Write the CA atom as the CG particle
+            lines.append(pdb_line(ca_atom, i_atom, 1 + i_seq, residue))
+            i_atom += 1
+    
+    # Add the TER statement at the end of the file
+    lines.append(f"TER   {i_atom:>5}")
+    
+    # Write to the CG PDB file
+    with open(output_filename, "w") as output_file:
+        output_file.write("\n".join(lines))
+        output_file.write("\n")
+        
 class PartialStructure:
     """ class representing the partial structure of an unfolded chain.
         keeps track of current displacement and spatial rotation,
