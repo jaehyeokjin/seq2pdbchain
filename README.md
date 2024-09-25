@@ -1,5 +1,5 @@
 # Make PDB files for unfolded chains given an amino acid sequence
-
+** Aimed for generating FUS protein and its CG structure **
 Start from an amino acid sequence and get a corresponding PDB file containing an unfolded protein with that sequence. The program makes an effort to avoid self-collisions and to generate a fairly compact chain. You can view the output and rerun if it is not satisfactory. Running an energy minimization afterwards is reccommended!
 
 ## Usage:
