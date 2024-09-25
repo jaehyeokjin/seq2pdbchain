@@ -23,14 +23,13 @@ sys.setrecursionlimit(2048)
 
 def blks_to_pdb(residues, blks):
     lines = []
-    i_atom = 0
+    i_atom = 1  # Start numbering from 1, not 0
     for i_seq, (residue, blk) in enumerate(zip(residues, blks)):
         for atom in blk:
             lines.append(pdb_line(atom, i_atom, 1 + i_seq, residue))
             i_atom += 1
     lines.append("TER " + pdb_line(Atom(" ", [0., 0., 0.], " "), i_atom, len(residues), residue)[4:27])
     return "\n".join(lines)
-
 
 class PartialStructure:
     """ class representing the partial structure of an unfolded chain.
